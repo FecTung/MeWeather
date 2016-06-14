@@ -5,14 +5,14 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 /**
- * Check device's network connectivity and speed
+ * Check device's network connectivity and speed 检测设备网络连接信息和网络速度
  * @author emil http://stackoverflow.com/users/220710/emil
  *
  */
 public class Connectivity {
 
 	/**
-	 * Get the network info
+	 * Get the network info 获取网络信息
 	 * @param context
 	 * @return
 	 */
@@ -22,7 +22,7 @@ public class Connectivity {
 	}
 
 	/**
-	 * Check if there is any connectivity
+	 * Check if there is any connectivity 检查是否有网络连接
 	 * @param context
 	 * @return
 	 */
@@ -32,7 +32,7 @@ public class Connectivity {
 	}
 
 	/**
-	 * Check if there is any connectivity to a Wifi network
+	 * Check if there is any connectivity to a Wifi network 检查是否有可用的Wi-Fi连接
 	 * @param context
 	 * @return
 	 */
@@ -42,7 +42,7 @@ public class Connectivity {
 	}
 
 	/**
-	 * Check if there is any connectivity to a mobile network
+	 * Check if there is any connectivity to a mobile network 检查是否有可用手机网络连接
 	 * @param context
 	 * @return
 	 */
