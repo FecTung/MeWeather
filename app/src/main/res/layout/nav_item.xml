@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="32dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/id_tv_nav_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:textAlignment="center"/>
+    <Button
+        android:id="@+id/id_btn_nav_item"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_cross"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="@dimen/padding_8"/>
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/id_drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fec.me.meweather.activity.MainActivity">
+
+    <include layout="@layout/weather_layout"/>
+    <!--Left Nav Drawer-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:id="@+id/id_nav_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_8"
+            android:textSize="18sp"
+            android:text="@string/app_name"
+            android:textColor="#F5F7F9"
+            android:textAlignment="center"/>
+
+        <ListView
+            android:id="@+id/id_nav_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/padding_16"
+            android:dividerHeight="0dp"
+            android:choiceMode="singleChoice"
+            android:clickable="true"
+            android:background="@color/colorWhite"
+            android:divider="@android:color/transparent"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"/>
+
+        <TextView
+            android:id="@+id/id_nav_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_8"
+            android:layout_marginBottom="@dimen/padding_16"
+            android:textSize="18sp"
+            android:text="Add City"
+            android:textColor="#F5F7F9"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>
