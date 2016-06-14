@@ -4,7 +4,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-<<<<<<< HEAD
 /**
  * Check device's network connectivity and speed 检测设备网络连接信息和网络速度
  * @author emil http://stackoverflow.com/users/220710/emil
@@ -17,49 +16,39 @@ public class Connectivity {
 	 * @param context
 	 * @return
 	 */
-=======
-public class Connectivity {
-
->>>>>>> 8b70bcaeec376c9ba65ea0a375071a3202cfdc99
 	public static NetworkInfo getNetworkInfo(Context context){
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		return cm.getActiveNetworkInfo();
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Check if there is any connectivity 检查是否有网络连接
 	 * @param context
 	 * @return
 	 */
-=======
->>>>>>> 8b70bcaeec376c9ba65ea0a375071a3202cfdc99
+
 	public static boolean isConnected(Context context){
 		NetworkInfo info = Connectivity.getNetworkInfo(context);
 		return (info != null && info.isConnected());
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Check if there is any connectivity to a Wifi network 检查是否有可用的Wi-Fi连接
 	 * @param context
 	 * @return
 	 */
-=======
->>>>>>> 8b70bcaeec376c9ba65ea0a375071a3202cfdc99
+
 	public static boolean isConnectedWifi(Context context){
 		NetworkInfo info = Connectivity.getNetworkInfo(context);
 		return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Check if there is any connectivity to a mobile network 检查是否有可用手机网络连接
 	 * @param context
 	 * @return
 	 */
-=======
->>>>>>> 8b70bcaeec376c9ba65ea0a375071a3202cfdc99
+
 	public static boolean isConnectedMobile(Context context){
 		NetworkInfo info = Connectivity.getNetworkInfo(context);
 		return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
