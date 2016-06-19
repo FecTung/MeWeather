@@ -1,7 +1,7 @@
 package com.fec.me.meweather.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,27 +17,33 @@ import android.widget.Toast;
 import com.fec.me.meweather.R;
 import com.fec.me.meweather.model.NavAdapter;
 import com.fec.me.meweather.model.NavItem;
-import com.fec.me.meweather.model.WeatherAdapter;
-import com.fec.me.meweather.model.WeatherItem;
 import com.fec.me.meweather.util.Connectivity;
 import com.fec.me.meweather.util.HttpCallbackListener;
 import com.fec.me.meweather.util.HttpUtil;
 import com.fec.me.meweather.util.Utility;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+	private static final String CITIES_MAIN = "cities";
+	private static final int NIGHT_BEGIN = 18;	// PM 6
+	private static final int NIGHT_END = 6;			// AM 6
+
 	private ListView navDrawer;
-	private ListView weatherLV;
 	private DrawerLayout drawerLayout;
-	private TextView navAddCity;
+	private android.support.v7.widget.Toolbar toolbar;
+
+	private TextView mainTV_update;
+	private TextView mainTV_TEMP;
+	private TextView mainTV_PM;
+	private TextView mainTV_HUMI;
+	private TextView mainTV_WD;
 
 	private NavAdapter navAdapter;
 	private List<NavItem> navItemList;
-	private WeatherAdapter weatherAdapter;
-	private List<WeatherItem> weatherItemList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +53,33 @@ public class MainActivity extends AppCompatActivity {
 		String [] codeAndName = getIntent().getStringArrayExtra("CodeAndName");
 
 		initUnits();
-		setDrawerLayout();
+		setToolbar();
 		setNavDrawer();
 		if (codeAndName != null) {
 			refreshNavDrawer(codeAndName);
 		}
-		navDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+		changeBackgroundByTime();
+
+	}
+
+	private void changeBackgroundByTime() {
+		Calendar now = Calendar.getInstance();
+		if (now.get(Calendar.HOUR_OF_DAY) < NIGHT_BEGIN && now.get(Calendar.HOUR_OF_DAY) > NIGHT_END){
+			drawerLayout.setBackground(getDrawable(R.drawable.daytime));
+		} else {
+			drawerLayout.setBackground(getDrawable(R.drawable.night));
+		}
+	}
+
+	private void setToolbar() {
+		setSupportActionBar(toolbar);
+		toolbar.setTitle("城市");
+		toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				drawerLayout.closeDrawer(navDrawer);
-				getWeatherByNavItem(position);
+			public void onClick(View v) {
+				drawerLayout.openDrawer(navDrawer);
 			}
 		});
 	}
@@ -69,16 +92,16 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void initUnits() {
-		navDrawer = (ListView) findViewById(R.id.id_nav_drawer);
-		weatherLV = (ListView) findViewById(R.id.id_lv_weather);
-		drawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
-		navAddCity = (TextView) findViewById(R.id.id_nav_footer);
-	}
+		toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
 
-	private void setDrawerLayout() {
-		weatherItemList = new ArrayList<WeatherItem>();
-		weatherAdapter = new WeatherAdapter(this, R.layout.weather_item, weatherItemList);
-		weatherLV.setAdapter(weatherAdapter);
+		navDrawer = (ListView) findViewById(R.id.id_nav_drawer);
+		drawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
+
+		mainTV_TEMP = (TextView) findViewById(R.id.main_tv_temp);
+		mainTV_PM = (TextView) findViewById(R.id.main_tv_pm25);
+		mainTV_HUMI = (TextView) findViewById(R.id.main_tv_humi);
+		mainTV_WD = (TextView) findViewById(R.id.main_tv_wd);
+		mainTV_update = (TextView) findViewById(R.id.update_time);
 	}
 
 	private void setNavDrawer() {
@@ -86,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
 		navAdapter = new NavAdapter(this, R.layout.nav_item, navItemList);
 		navDrawer.setAdapter(navAdapter);
 
-		navAddCity.setOnClickListener(new View.OnClickListener() {
+		navDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
-				startActivity(intent);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				drawerLayout.closeDrawer(navDrawer);
+				getWeatherByNavItem(position);
 			}
 		});
+
 	}
 
 	private void getWeatherByNavItem(int position) {
@@ -106,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		NetworkInfo networkInfo = Connectivity.getNetworkInfo(MainActivity.this);
 		if (!networkInfo.isConnected() && cityCode.equals(preferences.getString("cityid", ""))){
-			showWeather();
+//			showWeather();
+			queryFromServer(url, cityCode);
 		}else if(networkInfo.isConnected()){
 			queryFromServer(url, cityCode);
 		}else{
@@ -121,27 +146,11 @@ public class MainActivity extends AppCompatActivity {
 				public void onFinish(String response) {
 					if (!TextUtils.isEmpty(cityCode)) {
 						Utility.handleWeatherInfo(MainActivity.this, response);
-						SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-						String [] dateList = Utility.getDateByOrigin();
-
-						WeatherItem item0 = new WeatherItem(dateList[0], preferences.getString("temp",""), preferences.getString("weather",""), preferences.getString("WD",""));
-						WeatherItem item1 = new WeatherItem(dateList[1], preferences.getString("temp1",""), preferences.getString("weather1",""), preferences.getString("wind1",""));
-						WeatherItem item2 = new WeatherItem(dateList[2], preferences.getString("temp2",""), preferences.getString("weather2",""), preferences.getString("wind2",""));
-						WeatherItem item3 = new WeatherItem(dateList[3], preferences.getString("temp3",""), preferences.getString("weather3",""), preferences.getString("wind3",""));
-						WeatherItem item4 = new WeatherItem(dateList[4], preferences.getString("temp4",""), preferences.getString("weather4",""), preferences.getString("wind4",""));
-						WeatherItem item5 = new WeatherItem(dateList[5], preferences.getString("temp5",""), preferences.getString("weather5",""), preferences.getString("wind5",""));
-						WeatherItem item6 = new WeatherItem(dateList[6], preferences.getString("temp6",""), preferences.getString("weather6",""), preferences.getString("wind6",""));
-						weatherItemList.add(item0);
-						weatherItemList.add(item1);
-						weatherItemList.add(item2);
-						weatherItemList.add(item3);
-						weatherItemList.add(item4);
-						weatherItemList.add(item5);
-						weatherItemList.add(item6);
-						runOnUiThread(new Runnable() {
+							runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								showWeather();
+								refreshUI();
+
 							}
 						});
 					}
@@ -159,7 +168,15 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	private void showWeather() {
-		weatherAdapter.notifyDataSetChanged();
+	private void refreshUI() {
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+		toolbar.setTitle(preferences.getString("city","城市"));
+		toolbar.setTitleTextColor(Color.WHITE);
+		toolbar.setTitleTextAppearance(this, R.style.toolbar);
+		mainTV_TEMP.setText(preferences.getString("temp","") + "℃");
+		mainTV_PM.setText("PM2.5 : "+preferences.getString("pm25",""));
+		mainTV_HUMI.setText("HUMI : "+preferences.getString("SD",""));
+		mainTV_WD.setText(preferences.getString("WD","")+" : "+preferences.getString("WS",""));
+		mainTV_update.setText("更新时间 :"+preferences.getString("pub_time",""));
 	}
 }

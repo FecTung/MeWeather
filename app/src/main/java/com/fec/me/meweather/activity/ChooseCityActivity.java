@@ -1,8 +1,9 @@
 package com.fec.me.meweather.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ public class ChooseCityActivity extends AppCompatActivity {
 	private ListView lvShow;
 	private EditText etSearch;
 	private Button btnSearch;
+
 	private String userInput;
 	private List<City> cityList;
 
@@ -76,6 +78,7 @@ public class ChooseCityActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
+
 	}
 
 	/**
@@ -104,6 +107,7 @@ public class ChooseCityActivity extends AppCompatActivity {
 	private void initToolbar() {
 		toolbar = (Toolbar) findViewById(R.id.mToolbar);
 		toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+		toolbar.setTitleTextColor(Color.WHITE);
 		setSupportActionBar(toolbar);
 
 		toolbar.setNavigationOnClickListener(new View.OnClickListener() {

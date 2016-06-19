@@ -10,8 +10,11 @@
         android:id="@+id/mToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+				android:titleTextColor="@color/colorWhite"
         android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize"/>
+        android:minHeight="?attr/actionBarSize">
+
+		</android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_below="@id/mToolbar"
@@ -20,29 +23,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="10dp"
-                    android:textAllCaps="false"
-                    android:hint="Search City!"/>
-                <Button
-                    android:id="@+id/btn_search"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
-            </LinearLayout>
+						android:orientation="horizontal"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content">
+						<EditText
+								android:id="@+id/et_search"
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:layout_weight="1"
+								android:paddingStart="10dp"
+								android:layout_marginStart="8dp"
+								android:layout_marginEnd="8dp"
+								android:textAllCaps="false"
+								android:hint="Search City!"/>
 
-            <ListView
-                android:id="@+id/lv_show"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+						<Button
+								android:id="@+id/btn_search"
+								android:layout_width="24dp"
+								android:layout_height="24dp"
+								android:layout_marginEnd="8dp"
+								android:layout_gravity="center"/>
+				</LinearLayout>
 
-            </ListView>
+				<ListView
+						android:id="@+id/lv_show"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
+
+				</ListView>
 
     </LinearLayout>
 
