@@ -1,142 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-		android:id="@+id/id_drawer_layout"
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="@drawable/daytime"
-		tools:context="com.fec.me.meweather.activity.MainActivity"
-		xmlns:app="http://schemas.android.com/apk/res-auto">
+	android:id="@+id/id_drawer_layout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/daytime"
+	tools:context="com.fec.me.meweather.activity.MainActivity">
 	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
 		<android.support.v7.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:titleTextColor="@color/colorWhite"
-				style="@style/toolbar">
+			android:id="@+id/toolbar"
+			android:titleTextColor="@color/colorWhite"
+			style="@style/toolbar">
 		</android.support.v7.widget.Toolbar>
 
 		<TextView
-				android:id="@+id/main_tv_temp"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/toolbar"
-				android:paddingTop="48dp"
-				android:paddingBottom="64dp"
-				android:gravity="center"
-				android:textAllCaps="false"
-				android:textColor="@color/colorWhite"
-				android:text="19℃"
-				android:textSize="64sp"/>
+			android:id="@+id/main_tv_temp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/toolbar"
+			android:paddingTop="48dp"
+			android:paddingBottom="64dp"
+			android:gravity="center"
+			android:textAllCaps="false"
+			android:textColor="@color/colorWhite"
+			android:text="19℃"
+			android:textSize="64sp"/>
 
 		<LinearLayout
-				android:id="@+id/info_0"
-				android:layout_below="@id/main_tv_temp"
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_marginBottom="4dp"
-				android:layout_height="64dp"
-				android:gravity="center">
+			android:id="@+id/info_0"
+			android:layout_below="@id/main_tv_temp"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_marginBottom="4dp"
+			android:layout_height="64dp"
+			android:gravity="center">
 
 			<!--PM2.5-->
 			<TextView
-					android:id="@+id/main_tv_pm25"
-					style="@style/MainTV"
-					android:text="PM2.5"/>
+				android:id="@+id/main_tv_pm25"
+				style="@style/MainTV"
+				android:text="PM2.5"/>
 			<!--湿度-->
 			<TextView
-					android:id="@+id/main_tv_humi"
-					style="@style/MainTV"
-					android:text="HUMI"/>
-			<!--风向-->
+				android:id="@+id/main_tv_humi"
+				style="@style/MainTV"
+				android:text="HUMI"/>
+		<!--风向-->
 			<TextView
-					android:id="@+id/main_tv_wd"
-					style="@style/MainTV"
-					android:text="WD"/>
+				android:id="@+id/main_tv_wd"
+				style="@style/MainTV"
+				android:text="WD"/>
 		</LinearLayout>
 		<LinearLayout
-				android:id="@+id/info_1"
-				android:layout_below="@id/info_0"
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_marginBottom="4dp"
-				android:layout_height="64dp">
-
-
+			android:id="@+id/info_1"
+			android:layout_below="@id/info_0"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_marginBottom="4dp"
+			android:layout_height="64dp">
 		</LinearLayout>
 		<LinearLayout
-				android:id="@+id/info_2"
-				android:layout_below="@id/info_1"
-				android:layout_centerVertical="true"
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_marginBottom="4dp"
-				android:layout_height="64dp">
-
-
+			android:id="@+id/info_2"
+			android:layout_below="@id/info_1"
+			android:layout_centerVertical="true"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_marginBottom="4dp"
+			android:layout_height="64dp">
 		</LinearLayout>
 		<LinearLayout
-				android:id="@+id/info_3"
-				android:layout_below="@id/info_2"
-				android:layout_centerVertical="true"
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_marginBottom="4dp"
-				android:layout_height="64dp">
-
-
+			android:id="@+id/info_3"
+			android:layout_below="@id/info_2"
+			android:layout_centerVertical="true"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_marginBottom="4dp"
+			android:layout_height="64dp">
 		</LinearLayout>
 
 		<TextView
-				android:id="@+id/see_more"
-				android:layout_below="@id/info_3"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center"
-				android:clickable="true"
-				android:textSize="14sp"
-				android:textColor="#232323"
-				android:text="Click to See More!"/>
+			android:id="@+id/see_more"
+			android:layout_below="@id/info_3"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:clickable="true"
+			android:textSize="14sp"
+			android:textColor="#232323"
+			android:text="Click to See More!"/>
 		<TextView
-				android:layout_alignParentBottom="true"
-				android:layout_alignParentLeft="true"
-				android:paddingLeft="4dp"
-				android:paddingBottom="8dp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="12sp"
-				android:textColor="#232323"
-				android:text="SRC : 中国环境监测总站"
-				/>
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentLeft="true"
+			android:paddingLeft="4dp"
+			android:paddingBottom="8dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="12sp"
+			android:textColor="#232323"
+			android:text="SRC : 中国环境监测总站"
+		/>
 		<TextView
-				android:id="@+id/update_time"
-				android:layout_alignParentBottom="true"
-				android:layout_alignParentRight="true"
-				android:paddingRight="4dp"
-				android:paddingBottom="8dp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="12sp"
-				android:textColor="#232323"
-				android:text="更新时间 : 2016-06-13 18:00"
-				/>
+			android:id="@+id/update_time"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true"
+			android:paddingRight="4dp"
+			android:paddingBottom="8dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="12sp"
+			android:textColor="#232323"
+			android:text="更新时间 : 2016-06-13 18:00"
+		/>
 	</RelativeLayout>
 
 	<!--Left Nav Drawer-->
 
-			<ListView
-					android:id="@+id/id_nav_drawer"
-					android:layout_width="240dp"
-					android:layout_height="match_parent"
-					android:layout_gravity="start"
-					android:dividerHeight="0dp"
-					android:choiceMode="singleChoice"
-					android:clickable="true"
-					android:background="@color/colorPrimaryDark"
-					android:divider="@android:color/transparent"
-					android:footerDividersEnabled="true"
-					android:headerDividersEnabled="true"/>
+	<ListView
+		android:id="@+id/id_nav_drawer"
+		android:layout_width="240dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:dividerHeight="0dp"
+		android:choiceMode="singleChoice"
+		android:clickable="true"
+		android:background="@color/colorNav"
+		android:divider="@android:color/transparent"
+		android:footerDividersEnabled="true"
+		android:headerDividersEnabled="true"/>
 
 </android.support.v4.widget.DrawerLayout>

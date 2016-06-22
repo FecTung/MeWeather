@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="256dp"-->
-        <!--android:fitsSystemWindows="true">-->
-        <!--<android.support.design.widget.CollapsingToolbarLayout-->
-            <!--android:id="@+id/collapsing_toolbar_layout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--app:contentScrim="@color/colorPrimary"-->
-            <!--app:expandedTitleMarginStart="48dp"-->
-            <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	<!--<android.support.design.widget.AppBarLayout-->
+		<!--android:layout_width="match_parent"-->
+		<!--android:layout_height="256dp"-->
+		<!--android:fitsSystemWindows="true">-->
+		<!--<android.support.design.widget.CollapsingToolbarLayout-->
+			<!--android:id="@+id/collapsing_toolbar_layout"-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="match_parent"-->
+			<!--android:fitsSystemWindows="true"-->
+			<!--app:contentScrim="@color/colorPrimary"-->
+			<!--app:expandedTitleMarginStart="48dp"-->
+			<!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv_weather_today"-->
-                <!--android:layout_marginTop="?attr/actionBarSize"-->
-                <!--android:paddingEnd="@dimen/padding_8"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="end"-->
-                <!--android:textSize="16sp"-->
-                <!--android:text="\nCityName \n\n Weather \n\n Temp \n\n Wind"/>-->
+			<!--<TextView-->
+				<!--android:id="@+id/tv_weather_today"-->
+				<!--android:layout_marginTop="?attr/actionBarSize"-->
+				<!--android:paddingEnd="@dimen/padding_8"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:gravity="end"-->
+				<!--android:textSize="16sp"-->
+				<!--android:text="\nCityName \n\n Weather \n\n Temp \n\n Wind"/>-->
 
 
-            <!--<android.support.v7.widget.Toolbar-->
-                <!--android:id="@+id/toolbar"-->
-                <!--android:layout_width="match_parent"-->
-                <!--app:layout_collapseMode="pin"-->
-								<!--android:title="@string/app_name"-->
-                <!--android:layout_height="?attr/actionBarSize">-->
+			<!--<android.support.v7.widget.Toolbar-->
+				<!--android:id="@+id/toolbar"-->
+				<!--android:layout_width="match_parent"-->
+				<!--app:layout_collapseMode="pin"-->
+				<!--android:title="@string/app_name"-->
+				<!--android:layout_height="?attr/actionBarSize">-->
 
-						<!--</android.support.v7.widget.Toolbar>-->
+			<!--</android.support.v7.widget.Toolbar>-->
 
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-    <!--</android.support.design.widget.AppBarLayout>-->
+		<!--</android.support.design.widget.CollapsingToolbarLayout>-->
+	<!--</android.support.design.widget.AppBarLayout>-->
 </android.support.design.widget.CoordinatorLayout>

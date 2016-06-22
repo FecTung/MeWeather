@@ -2,7 +2,10 @@ package com.fec.me.meweather.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,6 +41,7 @@ public class ChooseCityActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_city);
 
+
 		initLayoutUnit();
 		initToolbar();
 		initDB();
@@ -63,6 +67,9 @@ public class ChooseCityActivity extends AppCompatActivity {
 	 * 设置若监听器的监听事件
 	 */
 	private void setListener() {
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
 		btnSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -72,10 +79,19 @@ public class ChooseCityActivity extends AppCompatActivity {
 		lvShow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				City city = cityList.get(position);
-				Intent intent = new Intent(ChooseCityActivity.this, MainActivity.class);
-				intent.putExtra("CodeAndName", new String[]{city.getCityCode(),city.getCityNameCN()});
-				startActivity(intent);
+				if (networkInfo != null && networkInfo.isConnected()) {
+					City city = cityList.get(position);
+					Intent intent = new Intent(ChooseCityActivity.this, MainActivity.class);
+					intent.putExtra("CodeAndName", new String[]{city.getCityCode(),city.getCityNameCN()});
+					startActivity(intent);
+				} else {
+					Snackbar.make(lvShow, "无网络连接！" , Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						return;
+					}
+				}).show();
+				}
 			}
 		});
 
@@ -126,12 +142,12 @@ public class ChooseCityActivity extends AppCompatActivity {
 	private void searchCity() {
 		userInput = etSearch.getText().toString();
 		if (!meWeatherDB.isDBEmpty()){
-			cityList = meWeatherDB.findCity(ChooseCityActivity.this, userInput);
-			list.clear();
-			for (City city:cityList){
-				list.add(city.getCityNameCN() + ", " + city.getCityParent());
-			}
-			adapter.notifyDataSetChanged();
+				cityList = meWeatherDB.findCity(ChooseCityActivity.this, userInput);
+				list.clear();
+				for (City city : cityList) {
+					list.add(city.getCityNameCN() + ", " + city.getCityParent());
+				}
+				adapter.notifyDataSetChanged();
 		} else {
 			meWeatherDB.initDB(ChooseCityActivity.this);
 		}
