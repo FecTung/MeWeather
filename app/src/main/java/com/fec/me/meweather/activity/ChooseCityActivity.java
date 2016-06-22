@@ -87,10 +87,10 @@ public class ChooseCityActivity extends AppCompatActivity {
 				} else {
 					Snackbar.make(lvShow, "无网络连接！" , Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
 					@Override
-					public void onClick(View v) {
-						return;
-					}
-				}).show();
+						public void onClick(View v) {
+							return;
+						}
+					}).show();
 				}
 			}
 		});

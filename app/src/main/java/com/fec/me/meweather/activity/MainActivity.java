@@ -2,9 +2,11 @@ package com.fec.me.meweather.activity;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,7 +19,6 @@ import android.widget.Toast;
 import com.fec.me.meweather.R;
 import com.fec.me.meweather.model.NavAdapter;
 import com.fec.me.meweather.model.NavItem;
-import com.fec.me.meweather.util.Connectivity;
 import com.fec.me.meweather.util.HttpCallbackListener;
 import com.fec.me.meweather.util.HttpUtil;
 import com.fec.me.meweather.util.Utility;
@@ -128,14 +129,20 @@ public class MainActivity extends AppCompatActivity {
 	private void queryWeatherInfo(String cityCode) {
 		String url = "http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=" + cityCode;
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		NetworkInfo networkInfo = Connectivity.getNetworkInfo(MainActivity.this);
-		if (!networkInfo.isConnected() && cityCode.equals(preferences.getString("cityid", ""))){
+
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+		if (networkInfo != null && networkInfo.isConnected() && cityCode.equals(preferences.getString("cityid", ""))){
 //			showWeather();
 			queryFromServer(url, cityCode);
-		}else if(networkInfo.isConnected()){
-			queryFromServer(url, cityCode);
 		}else{
-			Toast.makeText(MainActivity.this, "无网络连接", Toast.LENGTH_SHORT);
+			Snackbar.make(drawerLayout, "无网络连接！" , Snackbar.LENGTH_SHORT).setAction("OK", new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					return;
+				}
+			}).show();
 		}
 	}
 
