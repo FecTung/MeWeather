@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout
 	android:id="@+id/id_drawer_layout"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -118,18 +119,25 @@
 	</RelativeLayout>
 
 	<!--Left Nav Drawer-->
+	<android.support.design.widget.NavigationView
+			android:id="@+id/id_nav_drawer"
+			android:layout_width="240dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			android:background="@android:color/white"
+			app:headerLayout="@layout/nav_header"
+			app:menu="@menu/drawer_view">
 
-	<ListView
-		android:id="@+id/id_nav_drawer"
-		android:layout_width="240dp"
-		android:layout_height="match_parent"
-		android:layout_gravity="start"
-		android:dividerHeight="0dp"
-		android:choiceMode="singleChoice"
-		android:clickable="true"
-		android:background="@color/colorNav"
-		android:divider="@android:color/transparent"
-		android:footerDividersEnabled="true"
-		android:headerDividersEnabled="true"/>
+		<TextView
+				android:id="@+id/add_city"
+				android:layout_width="match_parent"
+				android:layout_height="48dp"
+				android:textAllCaps="false"
+				android:clickable="true"
+				android:layout_gravity="bottom"
+				android:gravity="center"
+				android:textSize="20sp"
+				android:text="Add New Item"/>
+	</android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

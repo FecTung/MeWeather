@@ -1,29 +1,27 @@
 package com.fec.me.meweather.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fec.me.meweather.R;
-import com.fec.me.meweather.model.NavAdapter;
-import com.fec.me.meweather.model.NavItem;
 import com.fec.me.meweather.util.HttpCallbackListener;
 import com.fec.me.meweather.util.HttpUtil;
+import com.fec.me.meweather.util.MenuUtils;
 import com.fec.me.meweather.util.Utility;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int NIGHT_BEGIN = 18;	// PM 6
 	private static final int NIGHT_END = 6;			// AM 6
 
-	private ListView navDrawer;
+	private NavigationView navDrawer;
 	private DrawerLayout drawerLayout;
 	private android.support.v7.widget.Toolbar toolbar;
 
@@ -42,26 +40,35 @@ public class MainActivity extends AppCompatActivity {
 	private TextView mainTV_PM;
 	private TextView mainTV_HUMI;
 	private TextView mainTV_WD;
+	private TextView addCity;
 
-	private NavAdapter navAdapter;
-	private List<NavItem> navItemList;
+	private String [] codeAndName = null;
+	private String cityCode = "101221702";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		String [] codeAndName = getIntent().getStringArrayExtra("CodeAndName");
+		codeAndName = getIntent().getStringArrayExtra("CodeAndName");
 
 		initUnits();
 		setToolbar();
-		setNavDrawer();
-		if (codeAndName != null) {
-			refreshNavDrawer(codeAndName);
-		}
-
+		refreshNav(codeAndName);
+		setListener();
+		queryWeatherInfo(cityCode);
 		changeBackgroundByTime();
 
+	}
+
+	private void setListener() {
+		addCity.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void changeBackgroundByTime() {
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		toolbar.setTitle("城市");
 		toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
+		toolbar.setTitleTextColor(Color.WHITE);
 		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -85,17 +93,25 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
-	private void refreshNavDrawer(String[] codeAndName) {
-		NavItem item = new NavItem(codeAndName[0], codeAndName[1]);
-		navItemList.add(item);
-		navAdapter.notifyDataSetChanged();
-		queryWeatherInfo(codeAndName[0]);
+	private void refreshNav(String[] codeAndName) {
+		MenuUtils menuUtils = new MenuUtils(this, "city_menus");
+		if (codeAndName != null){
+			menuUtils.addMenuItem(codeAndName);
+			cityCode = codeAndName[0];
+		}
+		List<String[]> menuList = menuUtils.readMenu();
+		if (menuList != null) {
+			for (String[] item : menuList) {
+				navDrawer.getMenu().add(item[1]);
+
+			}
+		}
 	}
 
 	private void initUnits() {
 		toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
 
-		navDrawer = (ListView) findViewById(R.id.id_nav_drawer);
+		navDrawer = (NavigationView) findViewById(R.id.id_nav_drawer);
 		drawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
 
 		mainTV_TEMP = (TextView) findViewById(R.id.main_tv_temp);
@@ -103,37 +119,17 @@ public class MainActivity extends AppCompatActivity {
 		mainTV_HUMI = (TextView) findViewById(R.id.main_tv_humi);
 		mainTV_WD = (TextView) findViewById(R.id.main_tv_wd);
 		mainTV_update = (TextView) findViewById(R.id.update_time);
-	}
 
-	private void setNavDrawer() {
-		navItemList = new ArrayList<NavItem>();
-		navAdapter = new NavAdapter(this, R.layout.nav_item, navItemList);
-		navDrawer.setAdapter(navAdapter);
-
-		navDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				drawerLayout.closeDrawer(navDrawer);
-				getWeatherByNavItem(position);
-			}
-		});
-
-	}
-
-	private void getWeatherByNavItem(int position) {
-		NavItem item = navItemList.get(position);
-		String cityCode = item.getCityCode();
-		queryWeatherInfo(cityCode);
+		addCity = (TextView) findViewById(R.id.add_city);
 	}
 
 	private void queryWeatherInfo(String cityCode) {
 		String url = "http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=" + cityCode;
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-		if (networkInfo != null && networkInfo.isConnected() && cityCode.equals(preferences.getString("cityid", ""))){
+		if (networkInfo != null && networkInfo.isConnected()){
 //			showWeather();
 			queryFromServer(url, cityCode);
 		}else{
@@ -157,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
 							@Override
 							public void run() {
 								refreshUI();
-
 							}
 						});
 					}
@@ -177,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
 
 	private void refreshUI() {
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
 		toolbar.setTitle(preferences.getString("city","城市"));
-		toolbar.setTitleTextColor(Color.WHITE);
 		toolbar.setTitleTextAppearance(this, R.style.toolbar);
 		mainTV_TEMP.setText(preferences.getString("temp","") + "℃");
 		mainTV_PM.setText("PM2.5 : "+preferences.getString("pm25",""));
