@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-	private static final String CITIES_MAIN = "cities";
+	private static final String MENU_CITIES = "city_menus";
 	private static final int NIGHT_BEGIN = 18;	// PM 6
 	private static final int NIGHT_END = 6;			// AM 6
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 		codeAndName = getIntent().getStringArrayExtra("CodeAndName");
 
+
 		initUnits();
 		setToolbar();
 		try {
@@ -66,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		queryWeatherInfo(cityCode);
+		changeBackgroundByTime();
+	}
+
 	private void setListener() {
 		addCity.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -74,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
+		navDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+			@Override
+			public boolean onNavigationItemSelected(MenuItem item) {
+				MenuUtils menuUtils = new MenuUtils(MainActivity.this, MENU_CITIES);
+				cityCode = menuUtils.findCodeByName((String) item.getTitle());
+				queryWeatherInfo(cityCode);
+				drawerLayout.closeDrawer(navDrawer);
+				return false;
+			}
+		});
+
 	}
 
 	private void changeBackgroundByTime() {
@@ -99,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void refreshNav(String[] codeAndName) throws IOException {
-		MenuUtils menuUtils = new MenuUtils(this, "city_menus");
+		MenuUtils menuUtils = new MenuUtils(this, MENU_CITIES);
 		if (codeAndName != null){
 			menuUtils.addMenuItem(codeAndName);
 			cityCode = codeAndName[0];
@@ -108,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 		if (menuList != null) {
 			for (String[] item : menuList) {
 				navDrawer.getMenu().add(item[1]);
-
 			}
 		}
 	}

@@ -68,4 +68,19 @@ public class MenuUtils {
 		return menuList;
 	}
 
+	public String findCodeByName(String cityName){
+		String cityCode = null;
+		String menuStr = FileHelper.readFile(filesPath, fileName);
+		if (!TextUtils.isEmpty(menuStr)){
+			String[]	menuItemStr = menuStr.split(";");
+			for (String item : menuItemStr) {
+				if (item.contains(cityName)){
+					//101221702 example
+					cityCode = item.substring(0,9);
+				}
+			}
+		}
+		return cityCode;
+	}
+
 }
