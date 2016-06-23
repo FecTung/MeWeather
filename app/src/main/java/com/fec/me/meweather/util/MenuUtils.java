@@ -3,6 +3,7 @@ package com.fec.me.meweather.util;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +24,33 @@ public class MenuUtils {
 	}
 
 	/**
+	 * 增加菜单项，并排除重复项
 	 * codeAndName[0] CityName, codeAndName[1] CityCode
 	 * @param codeAndName
 	 */
-	public void addMenuItem(String [] codeAndName){
-		FileHelper.writeFile(filesPath, codeAndName[0]+","+codeAndName[1]+";", fileName);
+	public void addMenuItem(String [] codeAndName) throws IOException {
+		boolean flag = false;
+		String codeName = codeAndName[0]+","+codeAndName[1];
+		String menuStr = FileHelper.readFile(filesPath, fileName);
+
+		if (!TextUtils.isEmpty(menuStr)){
+			String[]	menuItemStr = menuStr.split(";");
+			for (String item : menuItemStr) {
+				if (item.equals(codeName)){
+					flag = true;
+				} else {
+					continue;
+				}
+			}
+			if (!flag){FileHelper.writeFile(filesPath, codeAndName[0] + "," + codeAndName[1] + ";", fileName);}
+		} else {
+			FileHelper.writeFile(filesPath, codeAndName[0] + "," + codeAndName[1] + ";", fileName);
+		}
 	}
 
 	/**
-	 * 读取files文件下的fileName文件中的内容，并由List<Map<String, String>>返回
+	 * 读取菜单内容，在APP运行时动态配置
+	 * 读取files文件下的fileName文件中的内容，并由List<String[]>返回
 	 * @return
 	 */
 	public List<String[]> readMenu(){
@@ -48,4 +67,5 @@ public class MenuUtils {
 		}
 		return menuList;
 	}
+
 }

@@ -22,6 +22,7 @@ import com.fec.me.meweather.util.HttpUtil;
 import com.fec.me.meweather.util.MenuUtils;
 import com.fec.me.meweather.util.Utility;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -54,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
 		initUnits();
 		setToolbar();
-		refreshNav(codeAndName);
+		try {
+			refreshNav(codeAndName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		setListener();
 		queryWeatherInfo(cityCode);
 		changeBackgroundByTime();
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
-	private void refreshNav(String[] codeAndName) {
+	private void refreshNav(String[] codeAndName) throws IOException {
 		MenuUtils menuUtils = new MenuUtils(this, "city_menus");
 		if (codeAndName != null){
 			menuUtils.addMenuItem(codeAndName);
