@@ -3,9 +3,5 @@
     <group
         android:id="@+id/group_city"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_location"
-            android:icon="@drawable/ic_one"
-            android:title="Location"/>
     </group>
 </menu>

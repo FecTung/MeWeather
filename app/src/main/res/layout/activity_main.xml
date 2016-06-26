@@ -6,7 +6,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@drawable/daytime"
+	android:background="@drawable/day"
 	tools:context="com.fec.me.meweather.activity.MainActivity">
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -20,7 +20,8 @@
 
 		<TextView
 			android:id="@+id/main_tv_temp"
-			android:layout_width="match_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/toolbar"
 			android:paddingTop="48dp"
@@ -30,16 +31,29 @@
 			android:textColor="@color/colorWhite"
 			android:text="19℃"
 			android:textSize="64sp"/>
+		<TextView
+				android:id="@+id/main_tv_wea"
+				android:layout_width="match_parent"
+				android:gravity="center"
+				android:layout_height="48dp"
+				android:textSize="24sp"
+				android:text="晴"
+				android:textColor="@color/colorWhite"
+				android:layout_above="@+id/info_0"/>
 
 		<LinearLayout
 			android:id="@+id/info_0"
 			android:layout_below="@id/main_tv_temp"
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
-			android:layout_marginBottom="4dp"
+			android:layout_marginBottom="72dp"
 			android:layout_height="64dp"
 			android:gravity="center">
 
+			<!--Today-->
+			<!--<TextView-->
+				<!--style="@style/MainTV"-->
+				<!--android:text="Today"/>-->
 			<!--PM2.5-->
 			<TextView
 				android:id="@+id/main_tv_pm25"
@@ -62,7 +76,27 @@
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
 			android:layout_marginBottom="4dp"
-			android:layout_height="64dp">
+			android:layout_height="64dp"
+			android:gravity="center">
+			<!--Today-->
+			<TextView
+					style="@style/MainTV"
+					android:text="明天"/>
+			<!--TEMP-->
+			<TextView
+					android:id="@+id/main_tv_temp1"
+					style="@style/MainTV"
+					android:text="TEMP"/>
+			<!--天气-->
+			<TextView
+					android:id="@+id/main_tv_wea1"
+					style="@style/MainTV"
+					android:text="Weather"/>
+			<!--风向-->
+			<TextView
+					android:id="@+id/main_tv_wd1"
+					style="@style/MainTV"
+					android:text="WD"/>
 		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/info_2"
@@ -71,27 +105,38 @@
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
 			android:layout_marginBottom="4dp"
-			android:layout_height="64dp">
-		</LinearLayout>
-		<LinearLayout
-			android:id="@+id/info_3"
-			android:layout_below="@id/info_2"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-			android:layout_marginBottom="4dp"
-			android:layout_height="64dp">
+			android:layout_height="64dp"
+			android:gravity="center">
+			<!--Today-->
+			<TextView
+					style="@style/MainTV"
+					android:text="后天"/>
+			<!--TEMP-->
+			<TextView
+					android:id="@+id/main_tv_temp2"
+					style="@style/MainTV"
+					android:text="TEMP"/>
+			<!--天气-->
+			<TextView
+					android:id="@+id/main_tv_wea2"
+					style="@style/MainTV"
+					android:text="Weather"/>
+			<!--风向-->
+			<TextView
+					android:id="@+id/main_tv_wd2"
+					style="@style/MainTV"
+					android:text="WD"/>
 		</LinearLayout>
 
 		<TextView
 			android:id="@+id/see_more"
-			android:layout_below="@id/info_3"
+			android:layout_below="@id/info_2"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="48dp"
 			android:gravity="center"
 			android:clickable="true"
 			android:textSize="14sp"
-			android:textColor="#232323"
+			android:textColor="@color/colorWhite"
 			android:text="Click to See More!"/>
 		<TextView
 			android:layout_alignParentBottom="true"
@@ -101,7 +146,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="12sp"
-			android:textColor="#232323"
+			android:textColor="@color/colorWhite"
 			android:text="SRC : 中国环境监测总站"
 		/>
 		<TextView
@@ -113,7 +158,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="12sp"
-			android:textColor="#232323"
+			android:textColor="@color/colorWhite"
 			android:text="更新时间 : 2016-06-13 18:00"
 		/>
 	</RelativeLayout>
@@ -137,7 +182,7 @@
 				android:layout_gravity="bottom"
 				android:gravity="center"
 				android:textSize="20sp"
-				android:text="Add New Item"/>
+				android:text="Add City"/>
 	</android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

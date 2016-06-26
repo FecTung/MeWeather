@@ -41,7 +41,6 @@ public class ChooseCityActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_city);
 
-
 		initLayoutUnit();
 		initToolbar();
 		initDB();

@@ -3,7 +3,6 @@ package com.fec.me.meweather.util;
 import android.content.Context;
 import android.text.TextUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class MenuUtils {
 	 * codeAndName[0] CityName, codeAndName[1] CityCode
 	 * @param codeAndName
 	 */
-	public void addMenuItem(String [] codeAndName) throws IOException {
+	public void addMenuItem(String [] codeAndName) {
 		boolean flag = false;
 		String codeName = codeAndName[0]+","+codeAndName[1];
 		String menuStr = FileHelper.readFile(filesPath, fileName);

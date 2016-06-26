@@ -23,7 +23,6 @@ import com.fec.me.meweather.util.HttpUtil;
 import com.fec.me.meweather.util.MenuUtils;
 import com.fec.me.meweather.util.Utility;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,9 +38,17 @@ public class MainActivity extends AppCompatActivity {
 
 	private TextView mainTV_update;
 	private TextView mainTV_TEMP;
+	private TextView mainTV_WEA;
 	private TextView mainTV_PM;
 	private TextView mainTV_HUMI;
 	private TextView mainTV_WD;
+	private TextView mainTV_TEMP1;
+	private TextView mainTV_WEA1;
+	private TextView mainTV_WD1;
+	private TextView mainTV_TEMP2;
+	private TextView mainTV_WEA2;
+	private TextView mainTV_WD2;
+
 	private TextView addCity;
 
 	private String [] codeAndName = null;
@@ -51,28 +58,19 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		codeAndName = getIntent().getStringArrayExtra("CodeAndName");
-
-
 		initUnits();
 		setToolbar();
-		try {
-			refreshNav(codeAndName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		setListener();
 		queryWeatherInfo(cityCode);
 		changeBackgroundByTime();
-
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		queryWeatherInfo(cityCode);
-		changeBackgroundByTime();
+	protected void onStart() {
+		navDrawer.getMenu().clear();
+		refreshNav(codeAndName);
+		super.onStart();
 	}
 
 	private void setListener() {
@@ -80,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this, ChooseCityActivity.class);
+				drawerLayout.closeDrawer(navDrawer);
 				startActivity(intent);
 			}
 		});
+
 		navDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(MenuItem item) {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 	private void changeBackgroundByTime() {
 		Calendar now = Calendar.getInstance();
 		if (now.get(Calendar.HOUR_OF_DAY) < NIGHT_BEGIN && now.get(Calendar.HOUR_OF_DAY) > NIGHT_END){
-			drawerLayout.setBackground(getDrawable(R.drawable.daytime));
+			drawerLayout.setBackground(getDrawable(R.drawable.day));
 		} else {
 			drawerLayout.setBackground(getDrawable(R.drawable.night));
 		}
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
-	private void refreshNav(String[] codeAndName) throws IOException {
+	private void refreshNav(String[] codeAndName) {
 		MenuUtils menuUtils = new MenuUtils(this, MENU_CITIES);
 		if (codeAndName != null){
 			menuUtils.addMenuItem(codeAndName);
@@ -133,16 +133,26 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void initUnits() {
-		toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
 
+		toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
 		navDrawer = (NavigationView) findViewById(R.id.id_nav_drawer);
 		drawerLayout = (DrawerLayout) findViewById(R.id.id_drawer_layout);
 
+		mainTV_update = (TextView) findViewById(R.id.update_time);
+
 		mainTV_TEMP = (TextView) findViewById(R.id.main_tv_temp);
+		mainTV_WEA = (TextView) findViewById(R.id.main_tv_wea);
 		mainTV_PM = (TextView) findViewById(R.id.main_tv_pm25);
 		mainTV_HUMI = (TextView) findViewById(R.id.main_tv_humi);
 		mainTV_WD = (TextView) findViewById(R.id.main_tv_wd);
-		mainTV_update = (TextView) findViewById(R.id.update_time);
+
+		mainTV_WEA1 = (TextView) findViewById(R.id.main_tv_wea1);
+		mainTV_TEMP1 = (TextView) findViewById(R.id.main_tv_temp1);
+		mainTV_WD1 = (TextView) findViewById(R.id.main_tv_wd1);
+
+		mainTV_WEA2 = (TextView) findViewById(R.id.main_tv_wea2);
+		mainTV_TEMP2 = (TextView) findViewById(R.id.main_tv_temp2);
+		mainTV_WD2 = (TextView) findViewById(R.id.main_tv_wd2);
 
 		addCity = (TextView) findViewById(R.id.add_city);
 	}
@@ -199,10 +209,22 @@ public class MainActivity extends AppCompatActivity {
 
 		toolbar.setTitle(preferences.getString("city","城市"));
 		toolbar.setTitleTextAppearance(this, R.style.toolbar);
+
+		mainTV_update.setText("更新时间 :"+preferences.getString("pub_time",""));
+
 		mainTV_TEMP.setText(preferences.getString("temp","") + "℃");
+		mainTV_WEA.setText(preferences.getString("weather",""));
 		mainTV_PM.setText("PM2.5 : "+preferences.getString("pm25",""));
 		mainTV_HUMI.setText("HUMI : "+preferences.getString("SD",""));
 		mainTV_WD.setText(preferences.getString("WD","")+" : "+preferences.getString("WS",""));
-		mainTV_update.setText("更新时间 :"+preferences.getString("pub_time",""));
+
+		mainTV_TEMP1.setText(preferences.getString("temp1","") + "℃");
+		mainTV_WEA1.setText(preferences.getString("weather1",""));
+		mainTV_WD1.setText(preferences.getString("wind1",""));
+
+		mainTV_TEMP2.setText(preferences.getString("temp2","") + "℃");
+		mainTV_WEA2.setText(preferences.getString("weather2",""));
+		mainTV_WD2.setText(preferences.getString("wind2",""));
+
 	}
 }
