@@ -6,3 +6,15 @@
 **求一份 Android 实习工作**   
 Phone:187-5646-5084   
 Email:fectung@gmail.com
+
+APP 主界面：
+
+![主界面](https://github.com/FecTung/MeWeather/blob/master/ScreenShots/MainView.png)
+
+APP 搜索城市：（支持直接搜索省级、市级、县级）
+
+![搜索列表](https://github.com/FecTung/MeWeather/blob/master/ScreenShots/CityList.png)
+
+APP 侧滑菜单：
+
+![侧滑导航](https://github.com/FecTung/MeWeather/blob/master/ScreenShots/NavigationView01.png)
