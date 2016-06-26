@@ -218,11 +218,11 @@ public class MainActivity extends AppCompatActivity {
 		mainTV_HUMI.setText("HUMI : "+preferences.getString("SD",""));
 		mainTV_WD.setText(preferences.getString("WD","")+" : "+preferences.getString("WS",""));
 
-		mainTV_TEMP1.setText(preferences.getString("temp1","") + "℃");
+		mainTV_TEMP1.setText(preferences.getString("temp1",""));
 		mainTV_WEA1.setText(preferences.getString("weather1",""));
 		mainTV_WD1.setText(preferences.getString("wind1",""));
 
-		mainTV_TEMP2.setText(preferences.getString("temp2","") + "℃");
+		mainTV_TEMP2.setText(preferences.getString("temp2",""));
 		mainTV_WEA2.setText(preferences.getString("weather2",""));
 		mainTV_WD2.setText(preferences.getString("wind2",""));
 
