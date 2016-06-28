@@ -6,8 +6,11 @@
 **求一份 Android 实习工作**
 
 2016应届生，目前人在安徽老家，随时可以去面试
+
 英 语 : CET-6
+
 Phone : 187-5646-5084
+
 Email : fectung@gmail.com
 
 APP 主界面：
